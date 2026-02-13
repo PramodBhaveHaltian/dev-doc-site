@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Haltian EH Locator on Haltian Developer Documentation</title><link>https://developer.haltian.io/devices/tags/haltian-eh-locator/</link><description>Recent content in Haltian EH Locator on Haltian Developer Documentation</description><generator>Hugo</generator><language>en-us</language><atom:link href="https://developer.haltian.io/devices/tags/haltian-eh-locator/index.xml" rel="self" type="application/rss+xml"/><item><title>Installation</title><link>https://developer.haltian.io/devices/tags/haltian-eh-locator/installation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://developer.haltian.io/devices/tags/haltian-eh-locator/installation/</guid><description>&lt;h2 id="installation-overview"&gt;Installation Overview&lt;/h2&gt;
+&lt;p&gt;The Haltian EH Locator offers flexible installation options to suit various environments. This guide covers three primary mounting methods:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Indoor Light Mount&lt;/strong&gt; - Attach to ceiling light fixtures using energy harvesting&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cable Shelf Mount&lt;/strong&gt; - Mount on cable management or ceiling infrastructure with USB-C power&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Wall Mount&lt;/strong&gt; - Install on walls at recommended height with USB-C power&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="alert alert-warning" role="alert"&gt;&lt;div class="h4 alert-heading" role="heading"&gt;Before Installation&lt;/div&gt;
+&lt;p&gt;Ensure the Haltian IoT Gateway is operational and connected before installing EH Locators. Locators require an active Wirepas mesh network to function properly.&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Demos on Haltian Developer Documentation</title><link>https://developer.haltian.io/demos/</link><description>Recent content in Demos on Haltian Developer Documentation</description><generator>Hugo</generator><language>en-us</language><atom:link href="https://developer.haltian.io/demos/index.xml" rel="self" type="application/rss+xml"/><item><title>Parquet Data Demo</title><link>https://developer.haltian.io/demos/parquet-data-demo/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://developer.haltian.io/demos/parquet-data-demo/</guid><description>&lt;p&gt;This demo loads &lt;strong&gt;real data&lt;/strong&gt; directly from Parquet files and displays the organizational hierarchy. All data is fetched and processed in your browser using &lt;a href="https://github.com/hyparam/hyparquet"&gt;hyparquet&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="alert alert-info" role="alert"&gt;&lt;div class="h4 alert-heading" role="heading"&gt;Learn More&lt;/div&gt;
+&lt;p&gt;This demo showcases data from the Haltian IoT platform. Learn how to access this data programmatically via the &lt;a href="https://developer.haltian.io/haltian-iot/apis/data-api/"&gt;Data API&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;style&gt;
+/* Haltian Brand Colors */
+:root {
+ --haltian-radiant-green: #73F9C1;
+ --haltian-nordic-water: #143633;
+ --haltian-nordic-water-light: #2E4C49;
+ --haltian-clay-orange: #FF8862;
+ --haltian-grey-white: #F6FAFA;
+}
+.demo-browser {
+ background: var(--haltian-nordic-water);
+ border-radius: 12px;
+ padding: 24px;
+ margin: 20px 0;
+ color: #fff;
+ font-family: 'Montserrat', sans-serif;
+}
+.demo-header {
+ text-align: center;
+ margin-bottom: 24px;
+ padding-bottom: 16px;
+ border-bottom: 1px solid var(--haltian-nordic-water-light);
+}
+.demo-header h2 {
+ color: var(--haltian-radiant-green);
+ margin: 0 0 8px 0;
+ font-size: 1.5rem;
+}
+.demo-header p {
+ color: rgba(255,255,255,0.7);
+ margin: 0;
+ font-size: 0.9rem;
+}
+.demo-status {
+ background: var(--haltian-nordic-water-light);
+ border: 1px solid rgba(115, 249, 193, 0.3);
+ border-radius: 8px;
+ padding: 12px 16px;
+ margin-bottom: 20px;
+ font-size: 0.9rem;
+ color: var(--haltian-radiant-green);
+}
+.demo-status.error {
+ background: rgba(239, 68, 68, 0.2);
+ border-color: rgba(239, 68, 68, 0.3);
+ color: #fca5a5;
+}
+.demo-status.success {
+ background: rgba(115, 249, 193, 0.15);
+ border-color: rgba(115, 249, 193, 0.4);
+ color: var(--haltian-radiant-green);
+}
+.stats-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+ gap: 12px;
+ margin-bottom: 24px;
+}
+.stat-card {
+ background: var(--haltian-nordic-water-light);
+ border-radius: 8px;
+ padding: 16px;
+ text-align: center;
+ border: 1px solid rgba(115, 249, 193, 0.2);
+}
+.stat-value {
+ font-size: 2rem;
+ font-weight: 700;
+ color: var(--haltian-radiant-green);
+ line-height: 1;
+ margin-bottom: 4px;
+}
+.stat-value.location { color: var(--haltian-clay-orange); }
+.stat-value.building { color: #60a5fa; }
+.stat-value.floor { color: #a78bfa; }
+.stat-value.zone { color: var(--haltian-radiant-green); }
+.stat-label {
+ font-size: 0.75rem;
+ color: rgba(255,255,255,0.6);
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+}
+.tree-section {
+ background: var(--haltian-nordic-water-light);
+ border-radius: 8px;
+ padding: 20px;
+ margin-bottom: 20px;
+ border: 1px solid rgba(115, 249, 193, 0.15);
+}
+.tree-section h3 {
+ color: var(--haltian-radiant-green);
+ margin: 0 0 16px 0;
+ font-size: 1.1rem;
+ font-weight: 500;
+}
+.tree-view {
+ font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, monospace;
+ font-size: 0.85rem;
+ line-height: 1.8;
+}
+.tree-item {
+ padding: 2px 0;
+ display: flex;
+ align-items: center;
+}
+.tree-org { color: #fff; font-weight: 600; }
+.tree-location { color: var(--haltian-clay-orange); }
+.tree-building { color: #60a5fa; }
+.tree-floor { color: #a78bfa; }
+.tree-zone { color: var(--haltian-radiant-green); }
+.tree-icon { 
+ margin-right: 8px;
+ width: 20px;
+ text-align: center;
+}
+.tree-indent-1 { padding-left: 28px; }
+.tree-indent-2 { padding-left: 56px; }
+.tree-indent-3 { padding-left: 84px; }
+.tree-indent-4 { padding-left: 112px; }
+.tree-connector {
+ color: rgba(255,255,255,0.3);
+ margin-right: 4px;
+}
+.tree-meta {
+ color: rgba(255,255,255,0.4);
+ font-size: 0.75rem;
+ margin-left: 8px;
+}
+.data-types-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+ gap: 12px;
+}
+.measurements-grid {
+ display: grid;
+ grid-template-columns: repeat(2, 1fr);
+ gap: 10px;
+}
+@media (max-width: 600px) {
+ .measurements-grid {
+ grid-template-columns: 1fr;
+ }
+}
+.data-type-card {
+ background: rgba(115, 249, 193, 0.05);
+ border-radius: 8px;
+ padding: 12px 16px;
+ border: 1px solid rgba(115, 249, 193, 0.15);
+}
+.data-type-card.measurement {
+ padding: 10px 14px;
+}
+.data-type-name {
+ font-weight: 600;
+ color: #fff;
+ margin-bottom: 4px;
+}
+.data-type-name.measurement {
+ font-size: 0.85rem;
+ margin-bottom: 2px;
+}
+.data-type-count {
+ font-size: 0.85rem;
+ color: rgba(255,255,255,0.6);
+}
+.data-type-count.measurement {
+ font-size: 0.75rem;
+}
+.device-models-grid {
+ display: grid;
+ grid-template-columns: repeat(2, 1fr);
+ gap: 10px;
+}
+@media (max-width: 600px) {
+ .device-models-grid {
+ grid-template-columns: 1fr;
+ }
+}
+.device-model-card {
+ background: rgba(255, 136, 98, 0.08);
+ border-radius: 8px;
+ padding: 10px 14px;
+ border: 1px solid rgba(255, 136, 98, 0.2);
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
+.device-model-name {
+ font-size: 0.85rem;
+ font-weight: 500;
+ color: #fff;
+ font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, monospace;
+}
+.device-model-count {
+ font-size: 1rem;
+ font-weight: 700;
+ color: var(--haltian-clay-orange);
+ background: rgba(255, 136, 98, 0.15);
+ padding: 2px 10px;
+ border-radius: 12px;
+ min-width: 32px;
+ text-align: center;
+}
+.keywords-list {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 8px;
+}
+.keyword-tag {
+ background: rgba(115, 249, 193, 0.1);
+ border: 1px solid rgba(115, 249, 193, 0.3);
+ border-radius: 16px;
+ padding: 6px 14px;
+ display: inline-flex;
+ align-items: center;
+ gap: 8px;
+ font-size: 0.85rem;
+}
+.keyword-name {
+ color: var(--haltian-radiant-green);
+ font-weight: 500;
+}
+.keyword-count {
+ background: rgba(115, 249, 193, 0.2);
+ color: #fff;
+ padding: 2px 8px;
+ border-radius: 10px;
+ font-size: 0.75rem;
+ font-weight: 600;
+}
+.data-source {
+ margin-top: 24px;
+ padding-top: 16px;
+ border-top: 1px solid var(--haltian-nordic-water-light);
+ font-size: 0.8rem;
+ color: rgba(255,255,255,0.5);
+ text-align: center;
+}
+.data-source a {
+ color: var(--haltian-radiant-green);
+}
+&lt;/style&gt;
+&lt;div class="demo-browser"&gt;
+ &lt;div class="demo-header"&gt;
+ &lt;h2&gt;🗂️ Parquet Data Browser&lt;/h2&gt;
+ &lt;p&gt;Building Hierarchy from Haltian Sample Dataset&lt;/p&gt;</description></item><item><title>Meeting Room Occupancy</title><link>https://developer.haltian.io/demos/meeting-room-occupancy/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://developer.haltian.io/demos/meeting-room-occupancy/</guid><description>&lt;p&gt;This demo visualizes &lt;strong&gt;Taika Meeting room&lt;/strong&gt; occupancy for the full month of January 2026. Data shows occupancy status during Finnish office hours (Monday-Friday, 8:00-17:00 EET/EEST). All data is loaded directly from Parquet files using &lt;a href="https://github.com/hyparam/hyparquet"&gt;hyparquet&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="alert alert-info" role="alert"&gt;&lt;div class="h4 alert-heading" role="heading"&gt;Learn More&lt;/div&gt;
+&lt;p&gt;This demo showcases occupancy measurement data from the Haltian IoT platform. Learn how to access this data programmatically via the &lt;a href="https://developer.haltian.io/haltian-iot/apis/data-api/"&gt;Data API&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;style&gt;
+/* Haltian Brand Colors */
+:root {
+ --haltian-radiant-green: #73F9C1;
+ --haltian-nordic-water: #143633;
+ --haltian-nordic-water-light: #2E4C49;
+ --haltian-clay-orange: #FF8862;
+ --haltian-grey-white: #F6FAFA;
+}
+.occupancy-demo {
+ background: var(--haltian-nordic-water);
+ border-radius: 12px;
+ padding: 24px;
+ margin: 20px 0;
+ color: #fff;
+ font-family: 'Montserrat', sans-serif;
+}
+.demo-header {
+ text-align: center;
+ margin-bottom: 24px;
+ padding-bottom: 16px;
+ border-bottom: 1px solid var(--haltian-nordic-water-light);
+}
+.demo-header h2 {
+ color: var(--haltian-radiant-green);
+ margin: 0 0 8px 0;
+ font-size: 1.5rem;
+}
+.demo-header p {
+ color: rgba(255,255,255,0.7);
+ margin: 0;
+ font-size: 0.9rem;
+}
+.demo-status {
+ background: var(--haltian-nordic-water-light);
+ border: 1px solid rgba(115, 249, 193, 0.3);
+ border-radius: 8px;
+ padding: 12px 16px;
+ margin-bottom: 20px;
+ font-size: 0.9rem;
+ color: var(--haltian-radiant-green);
+}
+.demo-status.error {
+ background: rgba(239, 68, 68, 0.2);
+ border-color: rgba(239, 68, 68, 0.3);
+ color: #fca5a5;
+}
+.stats-summary {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+ gap: 12px;
+ margin-bottom: 24px;
+}
+.stat-box {
+ background: var(--haltian-nordic-water-light);
+ border-radius: 8px;
+ padding: 16px;
+ text-align: center;
+ border: 1px solid rgba(115, 249, 193, 0.2);
+}
+.stat-value {
+ font-size: 2rem;
+ font-weight: 700;
+ color: var(--haltian-radiant-green);
+ line-height: 1;
+ margin-bottom: 4px;
+}
+.stat-label {
+ font-size: 0.75rem;
+ color: rgba(255,255,255,0.6);
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+}
+.calendar-section {
+ background: var(--haltian-nordic-water-light);
+ border-radius: 8px;
+ padding: 20px;
+ margin-bottom: 20px;
+ border: 1px solid rgba(115, 249, 193, 0.15);
+}
+.calendar-section h3 {
+ color: var(--haltian-radiant-green);
+ margin: 0 0 16px 0;
+ font-size: 1.1rem;
+ font-weight: 500;
+}
+.calendar-grid {
+ display: grid;
+ grid-template-columns: auto repeat(9, 1fr);
+ gap: 2px;
+ font-size: 0.75rem;
+}
+.calendar-header {
+ background: rgba(115, 249, 193, 0.1);
+ padding: 8px 4px;
+ text-align: center;
+ font-weight: 600;
+ color: var(--haltian-radiant-green);
+}
+.calendar-day-label {
+ background: rgba(115, 249, 193, 0.05);
+ padding: 8px;
+ font-weight: 600;
+ color: rgba(255,255,255,0.8);
+ display: flex;
+ align-items: center;
+}
+.calendar-cell {
+ background: rgba(255,255,255,0.03);
+ padding: 4px;
+ text-align: center;
+ min-height: 30px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ border-radius: 3px;
+ font-size: 0.7rem;
+}
+.calendar-cell.weekend {
+ background: rgba(0,0,0,0.2);
+ color: rgba(255,255,255,0.3);
+}
+/* Gradient heatmap: 0% = green (vacant), 100% = orange (occupied) */
+.calendar-cell[data-occupancy] {
+ color: #fff;
+ font-weight: 500;
+}
+.legend {
+ display: flex;
+ gap: 16px;
+ justify-content: center;
+ margin-top: 16px;
+ flex-wrap: wrap;
+ align-items: center;
+}
+.legend-item {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ font-size: 0.85rem;
+}
+.legend-gradient {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+}
+.gradient-bar {
+ width: 150px;
+ height: 20px;
+ border-radius: 3px;
+ background: linear-gradient(to right, 
+ rgba(115, 249, 193, 0.3) 0%, 
+ rgba(115, 249, 193, 0.5) 25%,
+ rgba(255, 200, 100, 0.6) 50%,
+ rgba(255, 136, 98, 0.8) 75%,
+ var(--haltian-clay-orange) 100%
+ );
+}
+.legend-box {
+ width: 20px;
+ height: 20px;
+ border-radius: 3px;
+}
+.legend-box.no-data {
+ background: rgba(255,255,255,0.03);
+}
+.data-source {
+ margin-top: 24px;
+ padding-top: 16px;
+ border-top: 1px solid var(--haltian-nordic-water-light);
+ font-size: 0.8rem;
+ color: rgba(255,255,255,0.5);
+ text-align: center;
+}
+.data-source a {
+ color: var(--haltian-radiant-green);
+}
+&lt;/style&gt;
+&lt;div class="occupancy-demo"&gt;
+ &lt;div class="demo-header"&gt;
+ &lt;h2&gt;📅 Taika Meeting Room Occupancy&lt;/h2&gt;
+ &lt;p&gt;January 2026 • Finnish Office Hours (Mon-Fri 8:00-17:00 EET)&lt;/p&gt;</description></item><item><title>Device Explorer</title><link>https://developer.haltian.io/demos/device-explorer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://developer.haltian.io/demos/device-explorer/</guid><description>&lt;p&gt;This demo connects &lt;strong&gt;directly to the Haltian IoT Service API&lt;/strong&gt; (GraphQL) from your browser. Log in with demo credentials, search for devices by name or identifier, and explore their real-time data including measurements, metadata, and file attachments.&lt;/p&gt;
+&lt;div class="alert alert-info" role="alert"&gt;&lt;div class="h4 alert-heading" role="heading"&gt;Learn More&lt;/div&gt;
+&lt;p&gt;This demo showcases the &lt;a href="https://developer.haltian.io/haltian-iot/apis/service-api/"&gt;Service API&lt;/a&gt; — the same GraphQL API used by Haltian IoT Studio. See the &lt;a href="https://developer.haltian.io/haltian-iot/apis/"&gt;API documentation&lt;/a&gt; for full reference.&lt;/p&gt;
+&lt;/div&gt;
+&lt;style&gt;
+/* Haltian Brand Colors */
+:root {
+ --haltian-radiant-green: #73F9C1;
+ --haltian-nordic-water: #143633;
+ --haltian-nordic-water-light: #2E4C49;
+ --haltian-clay-orange: #FF8862;
+ --haltian-grey-white: #F6FAFA;
+ --haltian-light-green: #C7FDE6;
+}
+
+/* ── Layout ── */
+.device-explorer {
+ background: var(--haltian-nordic-water);
+ border-radius: 12px;
+ padding: 24px;
+ margin: 20px 0;
+ color: #fff;
+ font-family: 'Montserrat', sans-serif;
+}
+.de-header {
+ text-align: center;
+ margin-bottom: 24px;
+ padding-bottom: 16px;
+ border-bottom: 1px solid var(--haltian-nordic-water-light);
+}
+.de-header h2 {
+ color: var(--haltian-radiant-green);
+ margin: 0 0 8px 0;
+ font-size: 1.5rem;
+}
+.de-header p {
+ color: rgba(255,255,255,0.7);
+ margin: 0;
+ font-size: 0.9rem;
+}
+
+/* ── Status bar ── */
+.de-status {
+ background: var(--haltian-nordic-water-light);
+ border: 1px solid rgba(115, 249, 193, 0.3);
+ border-radius: 8px;
+ padding: 12px 16px;
+ margin-bottom: 20px;
+ font-size: 0.9rem;
+ color: var(--haltian-radiant-green);
+}
+.de-status.error {
+ background: rgba(239, 68, 68, 0.2);
+ border-color: rgba(239, 68, 68, 0.3);
+ color: #fca5a5;
+}
+.de-status.warn {
+ background: rgba(255, 136, 98, 0.15);
+ border-color: rgba(255, 136, 98, 0.3);
+ color: var(--haltian-clay-orange);
+}
+
+/* ── Login form ── */
+.de-login {
+ background: var(--haltian-nordic-water-light);
+ border-radius: 10px;
+ padding: 24px;
+ max-width: 440px;
+ margin: 0 auto;
+}
+.de-login h3 {
+ color: var(--haltian-radiant-green);
+ margin: 0 0 16px 0;
+ font-size: 1.1rem;
+ text-align: center;
+}
+.de-field {
+ margin-bottom: 14px;
+}
+.de-field label {
+ display: block;
+ font-size: 0.8rem;
+ color: rgba(255,255,255,0.6);
+ margin-bottom: 4px;
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+}
+.de-field input {
+ width: 100%;
+ padding: 10px 12px;
+ border: 1px solid rgba(115, 249, 193, 0.25);
+ border-radius: 6px;
+ background: rgba(0,0,0,0.25);
+ color: #fff;
+ font-size: 0.95rem;
+ font-family: inherit;
+ box-sizing: border-box;
+ transition: border-color 0.2s;
+}
+.de-field input:focus {
+ outline: none;
+ border-color: var(--haltian-radiant-green);
+}
+
+/* ── Buttons ── */
+.de-btn {
+ display: inline-block;
+ padding: 10px 24px;
+ border: none;
+ border-radius: 6px;
+ font-size: 0.95rem;
+ font-family: inherit;
+ font-weight: 600;
+ cursor: pointer;
+ transition: all 0.2s;
+}
+.de-btn-primary {
+ background: var(--haltian-radiant-green);
+ color: var(--haltian-nordic-water);
+}
+.de-btn-primary:hover {
+ background: var(--haltian-light-green);
+ transform: translateY(-1px);
+}
+.de-btn-primary:disabled {
+ opacity: 0.5;
+ cursor: not-allowed;
+ transform: none;
+}
+.de-btn-secondary {
+ background: rgba(255,255,255,0.1);
+ color: #fff;
+ border: 1px solid rgba(255,255,255,0.2);
+}
+.de-btn-secondary:hover {
+ background: rgba(255,255,255,0.2);
+}
+.de-btn-sm {
+ padding: 6px 14px;
+ font-size: 0.8rem;
+}
+.de-login-actions {
+ text-align: center;
+ margin-top: 18px;
+}
+
+/* ── Search ── */
+.de-search-area {
+ display: none;
+}
+.de-search-area.active { display: block; }
+.de-toolbar {
+ display: flex;
+ gap: 12px;
+ margin-bottom: 20px;
+ align-items: center;
+ flex-wrap: wrap;
+}
+.de-search-input {
+ flex: 1;
+ min-width: 200px;
+ padding: 10px 14px;
+ border: 1px solid rgba(115, 249, 193, 0.25);
+ border-radius: 6px;
+ background: rgba(0,0,0,0.25);
+ color: #fff;
+ font-size: 0.95rem;
+ font-family: inherit;
+}
+.de-search-input:focus {
+ outline: none;
+ border-color: var(--haltian-radiant-green);
+}
+.de-search-input::placeholder {
+ color: rgba(255,255,255,0.35);
+}
+.de-user-info {
+ font-size: 0.8rem;
+ color: rgba(255,255,255,0.5);
+}
+.de-user-info span {
+ color: var(--haltian-radiant-green);
+}
+
+/* ── Results list ── */
+.de-results {
+ display: none;
+}
+.de-results.active { display: block; }
+.de-result-count {
+ font-size: 0.85rem;
+ color: rgba(255,255,255,0.5);
+ margin-bottom: 12px;
+}
+.de-device-card {
+ background: var(--haltian-nordic-water-light);
+ border: 1px solid rgba(115, 249, 193, 0.15);
+ border-radius: 8px;
+ padding: 14px 18px;
+ margin-bottom: 10px;
+ cursor: pointer;
+ transition: all 0.2s;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
+.de-device-card:hover {
+ border-color: var(--haltian-radiant-green);
+ background: rgba(115, 249, 193, 0.08);
+}
+.de-device-card .de-card-name {
+ font-weight: 600;
+ color: #fff;
+ font-size: 0.95rem;
+}
+.de-device-card .de-card-type {
+ font-size: 0.8rem;
+ color: rgba(255,255,255,0.5);
+ margin-top: 2px;
+}
+.de-device-card .de-card-seen {
+ font-size: 0.75rem;
+ color: rgba(255,255,255,0.4);
+ text-align: right;
+ white-space: nowrap;
+}
+
+/* ── Detail panel ── */
+.de-detail {
+ display: none;
+}
+.de-detail.active { display: block; }
+.de-detail-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 20px;
+ flex-wrap: wrap;
+ gap: 10px;
+}
+.de-detail-header h3 {
+ color: var(--haltian-radiant-green);
+ margin: 0;
+ font-size: 1.2rem;
+}
+.de-section {
+ background: var(--haltian-nordic-water-light);
+ border-radius: 8px;
+ padding: 18px;
+ margin-bottom: 16px;
+}
+.de-section h4 {
+ color: var(--haltian-radiant-green);
+ margin: 0 0 12px 0;
+ font-size: 0.95rem;
+ padding-bottom: 8px;
+ border-bottom: 1px solid rgba(115, 249, 193, 0.15);
+}
+.de-kv-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 8px 24px;
+}
+@media (max-width: 600px) {
+ .de-kv-grid { grid-template-columns: 1fr; }
+}
+.de-kv {
+ display: flex;
+ flex-direction: column;
+}
+.de-kv .de-label {
+ font-size: 0.7rem;
+ color: rgba(255,255,255,0.45);
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+}
+.de-kv .de-value {
+ font-size: 0.9rem;
+ color: #fff;
+ word-break: break-all;
+}
+.de-kv .de-value.mono {
+ font-family: 'SF Mono', 'Fira Code', monospace;
+ font-size: 0.82rem;
+}
+.de-tag {
+ display: inline-block;
+ background: rgba(115, 249, 193, 0.15);
+ color: var(--haltian-radiant-green);
+ border-radius: 4px;
+ padding: 3px 10px;
+ font-size: 0.8rem;
+ margin: 2px 4px 2px 0;
+}
+.de-note {
+ background: rgba(0,0,0,0.2);
+ border-radius: 6px;
+ padding: 10px 14px;
+ margin-bottom: 8px;
+ font-size: 0.85rem;
+ color: rgba(255,255,255,0.8);
+}
+.de-note-date {
+ font-size: 0.7rem;
+ color: rgba(255,255,255,0.4);
+ margin-top: 4px;
+}
+
+/* ── Measurements table ── */
+.de-meas-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 10px;
+}
+@media (max-width: 600px) {
+ .de-meas-grid { grid-template-columns: 1fr; }
+}
+.de-meas-card {
+ background: rgba(0,0,0,0.2);
+ border-radius: 6px;
+ padding: 12px 14px;
+}
+.de-meas-card .de-meas-type {
+ font-size: 0.75rem;
+ color: rgba(255,255,255,0.5);
+ text-transform: uppercase;
+ letter-spacing: 0.3px;
+ margin-bottom: 4px;
+}
+.de-meas-card .de-meas-value {
+ font-size: 1.1rem;
+ font-weight: 600;
+ color: var(--haltian-radiant-green);
+}
+.de-meas-card .de-meas-time {
+ font-size: 0.7rem;
+ color: rgba(255,255,255,0.35);
+ margin-top: 2px;
+}
+.de-meas-card.loading .de-meas-value {
+ color: rgba(255,255,255,0.3);
+}
+
+/* ── Attachments ── */
+.de-attach-list {
+ display: flex;
+ flex-direction: column;
+ gap: 8px;
+}
+.de-attach-item {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ background: rgba(0,0,0,0.2);
+ border-radius: 6px;
+ padding: 10px 14px;
+}
+.de-attach-item .de-attach-name {
+ font-size: 0.9rem;
+ color: #fff;
+ word-break: break-all;
+}
+.de-attach-item .de-attach-date {
+ font-size: 0.7rem;
+ color: rgba(255,255,255,0.4);
+}
+.de-attach-link {
+ color: var(--haltian-radiant-green);
+ text-decoration: none;
+ font-size: 0.85rem;
+ font-weight: 600;
+ white-space: nowrap;
+}
+.de-attach-link:hover {
+ text-decoration: underline;
+}
+
+/* ── Spinner ── */
+.de-spinner {
+ display: inline-block;
+ width: 18px;
+ height: 18px;
+ border: 2px solid rgba(115, 249, 193, 0.3);
+ border-top-color: var(--haltian-radiant-green);
+ border-radius: 50%;
+ animation: de-spin 0.7s linear infinite;
+ vertical-align: middle;
+ margin-right: 6px;
+}
+@keyframes de-spin {
+ to { transform: rotate(360deg); }
+}
+.de-empty {
+ text-align: center;
+ color: rgba(255,255,255,0.4);
+ padding: 20px;
+ font-size: 0.9rem;
+}
+
+/* ── Location map placeholder ── */
+.de-location-info {
+ display: flex;
+ gap: 24px;
+ flex-wrap: wrap;
+}
+&lt;/style&gt;
+&lt;div class="device-explorer" id="deviceExplorer"&gt;
+ &lt;div class="de-header"&gt;
+ &lt;h2&gt;Device Explorer&lt;/h2&gt;
+ &lt;p&gt;Search and inspect devices via the Haltian IoT Service API&lt;/p&gt;</description></item></channel></rss>

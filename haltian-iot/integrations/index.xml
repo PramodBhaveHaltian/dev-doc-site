@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Integrations on Haltian Developer Documentation</title><link>https://developer.haltian.io/haltian-iot/integrations/</link><description>Recent content in Integrations on Haltian Developer Documentation</description><generator>Hugo</generator><language>en-us</language><atom:link href="https://developer.haltian.io/haltian-iot/integrations/index.xml" rel="self" type="application/rss+xml"/><item><title>ThingsBoard Integration</title><link>https://developer.haltian.io/haltian-iot/integrations/thingsboard/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://developer.haltian.io/haltian-iot/integrations/thingsboard/</guid><description>&lt;span class="badge bg-alpha text-dark badge-status"&gt;Alpha&lt;/span&gt;
+
+&lt;p&gt;ThingsBoard is an open-source IoT platform for data collection, processing, visualization, and device management. This guide shows how to integrate Haltian IoT data with ThingsBoard.&lt;/p&gt;
+&lt;h2 id="compatibility"&gt;Compatibility&lt;/h2&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;Feature&lt;/th&gt;
+ &lt;th&gt;Support&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Thingsee sensors&lt;/td&gt;
+ &lt;td&gt;✅ Full support&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Haltian IoT devices&lt;/td&gt;
+ &lt;td&gt;✅ Full support&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Indoor asset tracking&lt;/td&gt;
+ &lt;td&gt;✅ Full support&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Complex data (position, profiles)&lt;/td&gt;
+ &lt;td&gt;⚠️ Limited support&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="prerequisites"&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Haltian IoT MQTT credentials (API key ID and token)&lt;/li&gt;
+&lt;li&gt;ThingsBoard instance (Cloud or self-hosted)&lt;/li&gt;
+&lt;li&gt;Device ID mapping (UUID to physical device)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="alert alert-info" role="alert"&gt;&lt;div class="h4 alert-heading" role="heading"&gt;Credentials&lt;/div&gt;
+&lt;p&gt;Contact &lt;a href="mailto:support@haltian.com"&gt;support@haltian.com&lt;/a&gt; or your Haltian account manager for MQTT credentials.&lt;/p&gt;</description></item></channel></rss>

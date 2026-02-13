@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI-Ready Tutorials on Haltian Developer Documentation</title><link>https://developer.haltian.io/haltian-iot/tutorials/</link><description>Recent content in AI-Ready Tutorials on Haltian Developer Documentation</description><generator>Hugo</generator><language>en-us</language><atom:link href="https://developer.haltian.io/haltian-iot/tutorials/index.xml" rel="self" type="application/rss+xml"/><item><title>Building a Complete Application</title><link>https://developer.haltian.io/haltian-iot/tutorials/building-complete-app/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://developer.haltian.io/haltian-iot/tutorials/building-complete-app/</guid><description>&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
+&lt;p&gt;This tutorial demonstrates how to build a complete Haltian IoT application that can:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Authenticate&lt;/strong&gt; - Login and obtain access tokens&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Search&lt;/strong&gt; - Find devices by name, serial number, or ID&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Display Data&lt;/strong&gt; - Show device measurements and position&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Show Context&lt;/strong&gt; - Display building/floor information when device is in a space&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This tutorial provides complete, working GraphQL queries that any AI agent or developer can use to build a functional application.&lt;/p&gt;</description></item><item><title>Real-Time Data Streaming</title><link>https://developer.haltian.io/haltian-iot/tutorials/real-time-data-streaming/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://developer.haltian.io/haltian-iot/tutorials/real-time-data-streaming/</guid><description>&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
+&lt;p&gt;This tutorial demonstrates how to connect to Haltian IoT&amp;rsquo;s MQTT stream and receive real-time sensor data. You will learn to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Connect&lt;/strong&gt; - Establish secure MQTT connection with authentication&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Subscribe&lt;/strong&gt; - Listen to specific device measurements&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Process&lt;/strong&gt; - Parse and handle incoming sensor data&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Handle Errors&lt;/strong&gt; - Implement reconnection and error handling&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This tutorial provides complete, working code that any AI agent or developer can use to implement real-time data streaming.&lt;/p&gt;</description></item><item><title>Device Lookup by QR Code</title><link>https://developer.haltian.io/haltian-iot/tutorials/device-lookup-by-qr-code/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://developer.haltian.io/haltian-iot/tutorials/device-lookup-by-qr-code/</guid><description>&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Every Haltian IoT device has a unique QR code that can be scanned to instantly retrieve device information. This tutorial demonstrates how to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Scan&lt;/strong&gt; - Capture QR code data from physical device&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extract&lt;/strong&gt; - Parse TUID (legacy Thingsee Unique Identifier) from QR data&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Query&lt;/strong&gt; - Look up device details via GraphQL API&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Process&lt;/strong&gt; - Handle device information and display/store results&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This tutorial provides complete, production-ready code for integrating QR code device lookup into applications.&lt;/p&gt;</description></item></channel></rss>
